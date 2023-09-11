@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="robots" content="noindex" />
+        <title>Paidy example</title>
+    </head>
+
+    <body>
+        <button id="paidy-checkout-button" onclick="paidyPay()">Paidyでお支払い</button>
+        <script type="text/javascript" src="https://apps.paidy.com/"></script>
+        <script type="text/javascript">
+                    var config = {
+                        "api_key": "{{ .PaidyPublicKey }}",
+                        "logo_url": "http://www.paidy.com/images/logo.png",
+                        "closed": function(callbackData) {
+                            var params = {
+                                id: callbackData.id,
+                                status: callbackData.status,
+                            };
+                            window.location.href = "/recurring?" + new URLSearchParams(params).toString();
+                        },
+                        "token": {
+                            "wallet_id": "default",
+                            "type": "recurring",
+                        }
+                    };
+                    var paidyHandler = Paidy.configure(config); 
+                    function paidyPay() {
+                        var payload = {
+                            "store_name": "Paidy sample store",
+                            "buyer": {
+                                "email": "successful.payment@paidy.com",
+                                "name1": "山田　太郎",
+                                "name2": "ヤマダ　タロウ",
+                                "phone" : "08000000001"
+                            }
+                        };
+                        paidyHandler.launch(payload);
+                    };
+        </script>
+    </body>
+</html>
