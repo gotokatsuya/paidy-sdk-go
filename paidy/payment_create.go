@@ -27,13 +27,13 @@ type BuyerData struct {
 }
 
 type Order struct {
-	Items    []Items `json:"items"`
-	Tax      int     `json:"tax"`
-	Shipping int     `json:"shipping"`
-	OrderRef string  `json:"order_ref"`
+	Items    []Item `json:"items"`
+	Tax      int    `json:"tax,omitempty"`
+	Shipping int    `json:"shipping,omitempty"`
+	OrderRef string `json:"order_ref,omitempty"`
 }
 
-type Items struct {
+type Item struct {
 	Quantity    int    `json:"quantity"`
 	ID          string `json:"id,omitempty"`
 	Title       string `json:"title,omitempty"`
@@ -46,7 +46,7 @@ type ShippingAddress struct {
 	Line2 string `json:"line2,omitempty"`
 	State string `json:"state,omitempty"`
 	City  string `json:"city,omitempty"`
-	Zip   string `json:"zip,omitempty"`
+	Zip   string `json:"zip"`
 }
 
 type Metadata struct {
