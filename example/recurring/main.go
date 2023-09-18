@@ -31,6 +31,7 @@ func main() {
 	})
 
 	http.HandleFunc("/recurring", func(w http.ResponseWriter, r *http.Request) {
+		ctx := r.Context()
 		status := strings.ToLower(r.URL.Query().Get("status"))
 		if status != "active" {
 			http.Error(w, "invalid token status", http.StatusInternalServerError)
@@ -38,20 +39,20 @@ func main() {
 		}
 		// NOTE: save token to storage
 		tokenID := r.URL.Query().Get("id")
-		payment, err := paidyCli.PaymentCreate(r.Context(), &paidy.PaymentCreateRequest{
+		payment, err := paidyCli.PaymentCreate(ctx, &paidy.PaymentCreateRequest{
 			TokenID:  tokenID,
 			Amount:   100,
 			Currency: "JPY",
 			BuyerData: paidy.BuyerData{
-				UserID:          "aa",
+				UserID:          "aqwsedrftgyhujiklp",
 				Age:             20,
-				Ltv:             0,
 				OrderCount:      0,
+				Ltv:             0,
 				LastOrderAmount: 0,
 				LastOrderAt:     0,
 			},
 			Order: paidy.Order{
-				Items: []paidy.Items{
+				Items: []paidy.Item{
 					{
 						Quantity:  1,
 						UnitPrice: 100,
@@ -59,11 +60,16 @@ func main() {
 				},
 			},
 			ShippingAddress: paidy.ShippingAddress{
-				Zip:   "106-2004",
-				State: "東京都",
+				Zip:  "106-2004",
+				City: "東京都",
 			},
 		})
 		if err != nil {
+			switch err := err.(type) {
+			case *paidy.APIError:
+				data, _ := json.MarshalIndent(err, "", " ")
+				fmt.Printf("%v\n", string(data))
+			}
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
