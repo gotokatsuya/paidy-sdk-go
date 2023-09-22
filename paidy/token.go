@@ -22,8 +22,6 @@ type Token struct {
 	} `json:"origin,omitempty"`
 	Description string `json:"description,omitempty"`
 	Kind        string `json:"kind,omitempty"`
-	Metadata    struct {
-	} `json:"metadata,omitempty"`
 	WebhookURL  string `json:"webhook_url,omitempty"`
 	ConsumerID  string `json:"consumer_id,omitempty"`
 	Suspensions []struct {

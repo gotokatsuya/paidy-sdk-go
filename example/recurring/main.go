@@ -60,8 +60,9 @@ func main() {
 				},
 			},
 			ShippingAddress: paidy.ShippingAddress{
-				Zip:  "106-2004",
-				City: "東京都",
+				Zip:   "106-2004",
+				State: "東京都",
+				City:  "港区",
 			},
 		})
 		if err != nil {

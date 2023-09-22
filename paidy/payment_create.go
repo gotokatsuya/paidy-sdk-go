@@ -14,7 +14,6 @@ type PaymentCreateRequest struct {
 	BuyerData       BuyerData       `json:"buyer_data"`
 	Order           Order           `json:"order"`
 	ShippingAddress ShippingAddress `json:"shipping_address"`
-	Metadata        Metadata        `json:"metadata,omitempty"`
 }
 
 type BuyerData struct {
@@ -47,9 +46,6 @@ type ShippingAddress struct {
 	State string `json:"state,omitempty"`
 	City  string `json:"city,omitempty"`
 	Zip   string `json:"zip"`
-}
-
-type Metadata struct {
 }
 
 type PaymentCreateResponse Payment
