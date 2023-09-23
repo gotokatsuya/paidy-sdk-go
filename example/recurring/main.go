@@ -39,7 +39,7 @@ func main() {
 		}
 		// NOTE: save token to storage
 		tokenID := r.URL.Query().Get("id")
-		payment, err := paidyCli.PaymentCreate(ctx, &paidy.PaymentCreateRequest{
+		payment, capture, err := paidyCli.PaymentCreateWithCapture(ctx, &paidy.PaymentCreateRequest{
 			TokenID:  tokenID,
 			Amount:   100,
 			Currency: "JPY",
@@ -78,7 +78,13 @@ func main() {
 		if err != nil {
 			fmt.Println("error:", err)
 		} else {
-			fmt.Printf("%v\n", string(data))
+			fmt.Printf("Payment %v\n", string(data))
+		}
+		data, err = json.MarshalIndent(capture, "", " ")
+		if err != nil {
+			fmt.Println("error:", err)
+		} else {
+			fmt.Printf("Capture %v\n", string(data))
 		}
 		http.Redirect(w, r, "/", http.StatusFound)
 	})

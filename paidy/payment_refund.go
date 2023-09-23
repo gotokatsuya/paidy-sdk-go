@@ -16,7 +16,7 @@ type PaymentRefundResponse Payment
 // 決済のRefund
 func (c Client) PaymentRefund(ctx context.Context, id string, req *PaymentRefundRequest) (*PaymentRefundResponse, error) {
 	path := fmt.Sprintf("/payments/%s/refunds", id)
-	httpReq, err := c.NewRequest(http.MethodPost, path, nil)
+	httpReq, err := c.NewRequest(http.MethodPost, path, req)
 	if err != nil {
 		return nil, err
 	}

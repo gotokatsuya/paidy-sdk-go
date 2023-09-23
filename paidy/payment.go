@@ -20,13 +20,6 @@ type Payment struct {
 	Refunds         []PaymentRefund         `json:"refunds,omitempty"`
 }
 
-func (p Payment) GetCaptureID() string {
-	if len(p.Captures) == 0 {
-		return ""
-	}
-	return p.Captures[0].ID
-}
-
 type PaymentBuyer struct {
 	Name1 string `json:"name1,omitempty"`
 	Name2 string `json:"name2,omitempty"`

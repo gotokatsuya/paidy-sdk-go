@@ -64,3 +64,15 @@ func (c Client) PaymentCreate(ctx context.Context, req *PaymentCreateRequest) (*
 	}
 	return resp, nil
 }
+
+func (c Client) PaymentCreateWithCapture(ctx context.Context, req *PaymentCreateRequest) (*PaymentCreateResponse, *PaymentCaptureResponse, error) {
+	payment, err := c.PaymentCreate(ctx, req)
+	if err != nil {
+		return nil, nil, err
+	}
+	capture, err := c.PaymentCapture(ctx, payment.ID)
+	if err != nil {
+		return nil, nil, err
+	}
+	return payment, capture, nil
+}

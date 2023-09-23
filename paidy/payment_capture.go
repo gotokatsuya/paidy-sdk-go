@@ -6,12 +6,15 @@ import (
 	"net/http"
 )
 
+type PaymentCaptureRequest struct{}
+
 type PaymentCaptureResponse Payment
 
 // 決済のCapture
 func (c Client) PaymentCapture(ctx context.Context, id string) (*PaymentCaptureResponse, error) {
 	path := fmt.Sprintf("/payments/%s/captures", id)
-	httpReq, err := c.NewRequest(http.MethodPost, path, nil)
+	fmt.Println(path)
+	httpReq, err := c.NewRequest(http.MethodPost, path, &PaymentCaptureRequest{})
 	if err != nil {
 		return nil, err
 	}

@@ -71,7 +71,7 @@ func WithHTTPClient(c *http.Client) ClientOption {
 }
 
 // mergeQuery method
-func (c *Client) mergeQuery(path string, q interface{}) (string, error) {
+func (c *Client) mergeQuery(path string, q any) (string, error) {
 	v := reflect.ValueOf(q)
 	if v.Kind() == reflect.Ptr && v.IsNil() {
 		return path, nil
@@ -92,7 +92,7 @@ func (c *Client) mergeQuery(path string, q interface{}) (string, error) {
 }
 
 // NewRequest method
-func (c *Client) NewRequest(method, path string, body interface{}) (*http.Request, error) {
+func (c *Client) NewRequest(method, path string, body any) (*http.Request, error) {
 	switch method {
 	case http.MethodGet, http.MethodDelete:
 		if body != nil {
@@ -131,7 +131,7 @@ func (c *Client) NewRequest(method, path string, body interface{}) (*http.Reques
 }
 
 // Do method
-func (c *Client) Do(ctx context.Context, req *http.Request, v interface{}) (*http.Response, error) {
+func (c *Client) Do(ctx context.Context, req *http.Request, v any) (*http.Response, error) {
 	resp, err := c.httpClient.Do(req.WithContext(ctx))
 	if err != nil {
 		select {

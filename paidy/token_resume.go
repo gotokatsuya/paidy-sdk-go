@@ -16,7 +16,7 @@ type TokenResumeResponse Token
 // トークンの回復
 func (c Client) TokenResume(ctx context.Context, id string, req *TokenResumeRequest) (*TokenResumeResponse, error) {
 	path := fmt.Sprintf("/tokens/%s/resume", id)
-	httpReq, err := c.NewRequest(http.MethodPost, path, nil)
+	httpReq, err := c.NewRequest(http.MethodPost, path, req)
 	if err != nil {
 		return nil, err
 	}

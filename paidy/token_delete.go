@@ -16,7 +16,7 @@ type TokenDeleteResponse Token
 // トークンの削除
 func (c Client) TokenDelete(ctx context.Context, id string, req *TokenDeleteRequest) (*TokenDeleteResponse, error) {
 	path := fmt.Sprintf("/tokens/%s/delete", id)
-	httpReq, err := c.NewRequest(http.MethodPost, path, nil)
+	httpReq, err := c.NewRequest(http.MethodPost, path, req)
 	if err != nil {
 		return nil, err
 	}
