@@ -171,11 +171,11 @@ func isSuccess(resp *http.Response) bool {
 }
 
 type APIError struct {
-	Reference   string `json:"reference,omitempty"`
-	Status      string `json:"status,omitempty"`
-	Code        string `json:"code,omitempty"`
-	Title       string `json:"title,omitempty"`
-	Description string `json:"description,omitempty"`
+	Reference   string      `json:"reference,omitempty"`
+	Status      json.Number `json:"status,omitempty"`
+	Code        string      `json:"code,omitempty"`
+	Title       string      `json:"title,omitempty"`
+	Description string      `json:"description,omitempty"`
 }
 
 // Error method
